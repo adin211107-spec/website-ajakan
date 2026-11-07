@@ -2,224 +2,179 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Little Date With You ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <title>For Someone Special 💗</title>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 25px 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffe0ec, #fff5f8);
-      color: #663344;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      padding: 25px;
-      background: white;
-      border-radius: 24px;
-      box-shadow: 0 10px 35px #d98aa533;
-      text-align: center;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
 
-    h1 {
-      color: #e75480;
-      font-size: 29px;
-      margin: 10px 0;
-    }
+            /* FOTO KALIAN */
+            background:
+                linear-gradient(
+                    rgba(255, 192, 211, 0.50),
+                    rgba(255, 228, 236, 0.50)
+                ),
+                url('/static/foto-kita.jpeg');
 
-    .subtitle {
-      line-height: 1.6;
-      color: #805b68;
-    }
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
 
-    .photo {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-      border-radius: 18px;
-      margin: 15px 0;
-    }
+        .card {
+            background: rgba(255, 255, 255, 0.94);
+            width: 100%;
+            max-width: 400px;
+            padding: 35px 25px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(180, 60, 100, 0.25);
+            backdrop-filter: blur(8px);
+        }
 
-    .heart {
-      font-size: 35px;
-      animation: beat 1s infinite alternate;
-    }
+        .heart {
+            font-size: 55px;
+            animation: heartbeat 1.5s infinite;
+        }
 
-    @keyframes beat {
-      from { transform: scale(1); }
-      to { transform: scale(1.15); }
-    }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
 
-    .field {
-      margin-top: 20px;
-      text-align: left;
-    }
+            50% {
+                transform: scale(1.15);
+            }
+        }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
+        h1 {
+            color: #e75480;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
 
-    select, input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #f0b8cb;
-      border-radius: 12px;
-      background: #fff9fb;
-      color: #663344;
-      font-size: 16px;
-    }
+        p {
+            color: #888;
+            line-height: 1.6;
+        }
 
-    button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 24px;
-      border: none;
-      border-radius: 14px;
-      background: #e75480;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+        h3 {
+            color: #bd4770;
+            margin-top: 25px;
+        }
 
-    button:hover {
-      background: #d83b6c;
-    }
+        select, input {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: 1px solid #ffc0d3;
+            border-radius: 13px;
+            background: #fff8fa;
+            font-size: 15px;
+            outline: none;
+        }
 
-    .note {
-      font-size: 12px;
-      color: #997985;
-      line-height: 1.5;
-      margin-top: 15px;
-    }
-  </style>
+        select:focus, input:focus {
+            border-color: #e75480;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 22px;
+            border: none;
+            border-radius: 13px;
+            background: #e75480;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #cf3e6b;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #e75480;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body>
-  <main class="container">
-    <div class="heart">❤️</div>
 
-    <h1>A Little Date With You</h1>
+    <div class="card">
 
-    <p class="subtitle">
-      Ada yang mau ngajak kamu jalan nih! 🥹<br>
-      Pilih tempat dan tanggal yang kamu mau, ya.
-    </p>
+        <div class="heart">💗</div>
 
-    <img
-      class="photo"
-      src="foto-kita.jpeg"
-      alt="Foto kita"
-      onerror="this.style.display='none'"
-    >
+        <h1>Hai, Intan Dwi Kusuma!</h1>
 
-    <form id="dateForm">
-      <div class="field">
-        <label for="tempat">📍 Mau jalan ke mana?</label>
-        <select id="tempat" required>
-          <option value="">Pilih tempat dulu</option>
-          <option value="Cafe">☕ Cafe</option>
-          <option value="Nonton bioskop">🎬 Nonton bioskop</option>
-          <option value="Jalan-jalan sore">🌇 Jalan-jalan sore</option>
-          <option value="Makan bareng">🍜 Makan bareng</option>
-          <option value="Terserah kamu">💗 Terserah kamu</option>
-        </select>
-      </div>
+        <p>
+            Intan kan besok kita mau ke CFD
+            Jadi...
+        </p>
 
-      <div class="field">
-        <label for="tanggal">📅 Pilih tanggal</label>
-        <input type="date" id="tanggal" required>
-      </div>
+        <h3>
+            Besok kamu mau pakai baju warna apa?
+        </h3>
 
-      <div class="field">
-        <label for="pesan">💌 Mau kasih pesan tambahan?</label>
-        <input
-          type="text"
-          id="pesan"
-          placeholder="Contoh: jangan telat yaa hehe"
-          maxlength="200"
-        >
-      </div>
+        <form action="https://formsubmit.co/adin211107@gmail.com"
+              method="POST">
 
-      <button type="submit">
-        Kirim Jawaban ke WhatsApp 💌
-      </button>
-    </form>
+            <select name="Pilihan Warna" required>
+                <option value="">Pilih warna ya ❤️</option>
+                <option>Putih 🤍</option>
+                <option>Hitam 🖤</option>
+                <option>Pink 💗</option>
+                <option>Biru 💙</option>
+                <option>Ungu 💜</option>
+                <option>Hijau 💚</option>
+                <option>Merah ❤️</option>
+                <option>Cokelat 🤎</option>
+                <option>Abu-abu 🩶</option>
+            </select>
 
-    <p class="note">
-      Setelah menekan tombol, WhatsApp akan terbuka.
-      Tekan tombol Kirim di WhatsApp agar jawabannya sampai.
-    </p>
-  </main>
+            <input
+                type="text"
+                name="Pesan Tambahan"
+                placeholder="Ada pesan buat aku? (opsional)"
+            >
 
-  <script>
-    // GANTI dengan nomor WhatsApp LU.
-    // Gunakan kode negara 62, tanpa tanda +, spasi, atau tanda -.
-    // Contoh format: 6281234567890
-    const nomorWhatsApp = "6281270856739";
+            <input
+                type="hidden"
+                name="_subject"
+                value="Jawaban warna baju kamu 💗"
+            >
 
-    const inputTanggal = document.getElementById("tanggal");
+            <button type="submit">
+                Kirim Jawaban 💌
+            </button>
 
-    // Mencegah tanggal sebelum hari ini dipilih.
-    const hariIni = new Date();
-    const tahun = hariIni.getFullYear();
-    const bulan = String(hariIni.getMonth() + 1).padStart(2, "0");
-    const hari = String(hariIni.getDate()).padStart(2, "0");
+        </form>
 
-    inputTanggal.min = `${tahun}-${bulan}-${hari}`;
+        <div class="footer">
+            Made with love ❤️
+        </div>
 
-    document.getElementById("dateForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+    </div>
 
-      const tempat = document.getElementById("tempat").value;
-      const tanggal = inputTanggal.value;
-      const pesanTambahan = document.getElementById("pesan").value.trim();
-
-      if (!tempat || !tanggal) {
-        alert("Pilih tempat dan tanggal dulu, ya ❤️");
-        return;
-      }
-
-      if (nomorWhatsApp === "GANTI_DENGAN_NOMOR_LU") {
-        alert("Nomor WhatsApp pemilik website belum diatur.");
-        return;
-      }
-
-      const tanggalFormat = new Date(tanggal + "T12:00:00")
-        .toLocaleDateString("id-ID", {
-          day: "numeric",
-          month: "long",
-          year: "numeric"
-        });
-
-      const isiPesan =
-        "💗 JAWABAN AJAKAN JALAN 💗\n\n" +
-        "Haii! Aku udah pilih yaa 🥰\n\n" +
-        "📍 Tempat: " + tempat + "\n" +
-        "📅 Tanggal: " + tanggalFormat + "\n" +
-        "💌 Pesan: " + (pesanTambahan || "Tidak ada pesan tambahan") +
-        "\n\n❤️ Sampai ketemu nanti!";
-
-      const linkWhatsApp =
-        "https://wa.me/" + nomorWhatsApp +
-        "?text=" + encodeURIComponent(isiPesan);
-
-      window.location.href = linkWhatsApp;
-    });
-  </script>
 </body>
 </html>
