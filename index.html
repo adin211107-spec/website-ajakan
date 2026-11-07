@@ -4,13 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>For Someone Special 💗</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -20,14 +17,12 @@
             align-items: center;
             padding: 25px 15px;
             font-family: Arial, sans-serif;
-
             background:
                 linear-gradient(
                     rgba(255, 192, 211, 0.65),
                     rgba(255, 228, 236, 0.75)
                 ),
                 url("foto-kita.jpeg");
-
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -47,18 +42,10 @@
         }
 
         @keyframes muncul {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* FOTO KALIAN */
         .foto-kita {
             width: 155px;
             height: 155px;
@@ -69,20 +56,14 @@
             margin-bottom: 15px;
         }
 
-        /* ANIMASI HATI */
         .heart {
             font-size: 55px;
             animation: heartbeat 1.5s infinite;
         }
 
         @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.15);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         h1 {
@@ -91,10 +72,7 @@
             margin-bottom: 10px;
         }
 
-        p {
-            color: #888;
-            line-height: 1.6;
-        }
+        p { color: #888; line-height: 1.6; }
 
         h3 {
             color: #bd4770;
@@ -113,9 +91,7 @@
             outline: none;
         }
 
-        select:focus, input:focus {
-            border-color: #e75480;
-        }
+        select:focus, input:focus { border-color: #e75480; }
 
         button {
             width: 100%;
@@ -136,34 +112,34 @@
             transform: translateY(-2px);
         }
 
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
         .footer {
             margin-top: 25px;
             color: #e75480;
             font-size: 13px;
         }
 
+        #status {
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
         @media (max-width: 480px) {
-            .card {
-                padding: 30px 20px;
-            }
-
-            h1 {
-                font-size: 25px;
-            }
-
-            .foto-kita {
-                width: 135px;
-                height: 135px;
-            }
+            .card { padding: 30px 20px; }
+            h1 { font-size: 25px; }
+            .foto-kita { width: 135px; height: 135px; }
         }
     </style>
 </head>
 
 <body>
-
     <div class="card">
 
-        <!-- FOTO KALIAN -->
         <img
             src="foto-kita.jpeg"
             class="foto-kita"
@@ -179,16 +155,11 @@
             Jadi...
         </p>
 
-        <h3>
-            Besok kamu mau pakai baju warna apa?
-        </h3>
+        <h3>Besok kamu mau pakai baju warna apa?</h3>
 
-        <form
-            action="https://formsubmit.co/adin211107@gmail.com"
-            method="POST"
-        >
+        <form id="formJawaban">
 
-            <select name="Pilihan Warna" required>
+            <select id="warna" required>
                 <option value="">Pilih warna ya ❤️</option>
                 <option>Putih 🤍</option>
                 <option>Hitam 🖤</option>
@@ -203,27 +174,80 @@
 
             <input
                 type="text"
-                name="Pesan Tambahan"
+                id="pesan"
+                maxlength="1000"
                 placeholder="Ada pesan buat aku? (opsional)"
             >
 
-            <input
-                type="hidden"
-                name="_subject"
-                value="Jawaban warna baju kamu 💗"
-            >
-
-            <button type="submit">
+            <button type="submit" id="tombolKirim">
                 Kirim Jawaban 💌
             </button>
 
+            <div id="status" aria-live="polite"></div>
         </form>
 
-        <div class="footer">
-            Made with love ❤️
-        </div>
-
+        <div class="footer">Made with love ❤️</div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Konfigurasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1qT59FQeyJZp0QJIb1OTELe22dCm0t-o",
+            authDomain: "website-ajakan.firebaseapp.com",
+            projectId: "website-ajakan",
+            storageBucket: "website-ajakan.firebasestorage.app",
+            messagingSenderId: "795797802548",
+            appId: "1:795797802548:web:ddeb281b22d12e64770461",
+            measurementId: "G-BXY97LS5XP"
+        };
+
+        // Inisialisasi Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const form = document.getElementById("formJawaban");
+        const tombol = document.getElementById("tombolKirim");
+        const status = document.getElementById("status");
+
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const warna = document.getElementById("warna").value;
+            const pesan = document.getElementById("pesan").value.trim();
+
+            tombol.disabled = true;
+            tombol.textContent = "Mengirim...";
+            status.textContent = "";
+
+            try {
+                await db.collection("jawaban").add({
+                    nama: "Intan Dwi Kusuma",
+                    warna: warna,
+                    pesan: pesan,
+                    waktu: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                status.textContent = "Jawaban berhasil dikirim! 💗";
+                status.style.color = "#219653";
+                form.reset();
+
+            } catch (error) {
+                console.error("Firebase error:", error);
+
+                status.textContent =
+                    "Jawaban gagal dikirim. Coba lagi beberapa saat ya.";
+
+                status.style.color = "#d93025";
+
+            } finally {
+                tombol.disabled = false;
+                tombol.textContent = "Kirim Jawaban 💌";
+            }
+        });
+    </script>
 </body>
 </html>
