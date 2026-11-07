@@ -18,16 +18,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 25px 15px;
             font-family: Arial, sans-serif;
 
-            /* FOTO KALIAN */
             background:
                 linear-gradient(
-                    rgba(255, 192, 211, 0.50),
-                    rgba(255, 228, 236, 0.50)
+                    rgba(255, 192, 211, 0.65),
+                    rgba(255, 228, 236, 0.75)
                 ),
-                url('/static/foto-kita.jpeg');
+                url("foto-kita.jpeg");
 
             background-size: cover;
             background-position: center;
@@ -38,14 +37,39 @@
         .card {
             background: rgba(255, 255, 255, 0.94);
             width: 100%;
-            max-width: 400px;
-            padding: 35px 25px;
-            border-radius: 28px;
+            max-width: 480px;
+            padding: 35px 30px;
+            border-radius: 30px;
             text-align: center;
             box-shadow: 0 10px 40px rgba(180, 60, 100, 0.25);
             backdrop-filter: blur(8px);
+            animation: muncul 1s ease;
         }
 
+        @keyframes muncul {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FOTO KALIAN */
+        .foto-kita {
+            width: 155px;
+            height: 155px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #ffb6d0;
+            box-shadow: 0 5px 20px rgba(255, 80, 140, 0.25);
+            margin-bottom: 15px;
+        }
+
+        /* ANIMASI HATI */
         .heart {
             font-size: 55px;
             animation: heartbeat 1.5s infinite;
@@ -75,11 +99,12 @@
         h3 {
             color: #bd4770;
             margin-top: 25px;
+            line-height: 1.4;
         }
 
         select, input {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             margin-top: 15px;
             border: 1px solid #ffc0d3;
             border-radius: 13px;
@@ -94,7 +119,7 @@
 
         button {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             margin-top: 22px;
             border: none;
             border-radius: 13px;
@@ -116,6 +141,21 @@
             color: #e75480;
             font-size: 13px;
         }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .foto-kita {
+                width: 135px;
+                height: 135px;
+            }
+        }
     </style>
 </head>
 
@@ -123,12 +163,19 @@
 
     <div class="card">
 
+        <!-- FOTO KALIAN -->
+        <img
+            src="foto-kita.jpeg"
+            class="foto-kita"
+            alt="Foto kita"
+        >
+
         <div class="heart">💗</div>
 
         <h1>Hai, Intan Dwi Kusuma!</h1>
 
         <p>
-            Intan kan besok kita mau ke CFD
+            Intan kan besok kita mau ke CFD.
             Jadi...
         </p>
 
@@ -136,8 +183,10 @@
             Besok kamu mau pakai baju warna apa?
         </h3>
 
-        <form action="https://formsubmit.co/adin211107@gmail.com"
-              method="POST">
+        <form
+            action="https://formsubmit.co/adin211107@gmail.com"
+            method="POST"
+        >
 
             <select name="Pilihan Warna" required>
                 <option value="">Pilih warna ya ❤️</option>
