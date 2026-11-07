@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin 💗</title>
+
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 25px 15px;
+  font-family: Arial, sans-serif;
+  background: #fff0f5;
+  color: #593344;
+}
+
+.container {
+  max-width: 650px;
+  margin: 35px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 5px 25px #e8b9cb;
+}
+
+h1 { text-align: center; color: #df6395; }
+
+input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border: 1px solid #e7b5ca;
+  border-radius: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #e875a4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card {
+  background: #fff4f8;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+  overflow-wrap: anywhere;
+}
+
+.hidden { display: none; }
+
+#status {
+  text-align: center;
+  margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="login">
+    <h1>Login Admin 💗</h1>
+    <p>Masuk untuk melihat jawaban yang diterima.</p>
+
+    <input id="email" type="email" placeholder="Email admin">
+    <input id="password" type="password" placeholder="Password admin">
+
+    <button id="loginBtn" onclick="login()">Masuk</button>
+    <p id="status"></p>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <h1>Dashboard Admin 💌</h1>
+    <p>Jawaban yang masuk dari website:</p>
+
+    <button onclick="logout()">Keluar</button>
+
+    <div id="daftarJawaban">Memuat jawaban...</div>
+  </div>
+
+</div>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyA1qT59FQeyJZp0QJIb1OTELe22dCm0t-o",
+  authDomain: "website-ajakan.firebaseapp.com",
+  projectId: "website-ajakan",
+  storageBucket: "website-ajakan.firebasestorage.app",
+  messagingSenderId: "795797802548",
+  appId: "1:795797802548:web:ddeb281b22d12e64770461",
+  measurementId: "G-BXY97LS5XP"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const status = document.getElementById("status");
+
+  status.textContent = "Sedang login...";
+
+  auth.signInWithEmailAndPassword(email, password)
+    .catch(error => {
+      status.textContent = "Login gagal: " + error.message;
+    });
+}
+
+function logout() {
+  auth.signOut();
+}
+
+auth.onAuthStateChanged(user => {
+  const loginBox = document.getElementById("login");
+  const dashboard = document.getElementById("dashboard");
+
+  if (user && user.uid === "BYZs9wGNhQUboarxGE3k3anUKg82") {
+    loginBox.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+    ambilJawaban();
+  } else {
+    dashboard.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+
+    if (user) {
+      auth.signOut();
+      document.getElementById("status").textContent =
+        "Akun ini tidak memiliki akses admin.";
+    }
+  }
+});
+
+function ambilJawaban() {
+  const daftar = document.getElementById("daftarJawaban");
+
+  db.collection("jawaban")
+    .orderBy("waktu", "desc")
+    .onSnapshot(snapshot => {
+      daftar.innerHTML = "";
+
+      if (snapshot.empty) {
+        daftar.textContent = "Belum ada jawaban.";
+        return;
+      }
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+
+        const kartu = document.createElement("div");
+        kartu.className = "card";
+
+        const nama = document.createElement("h3");
+        nama.textContent = "Nama: " + (data.nama || "-");
+
+        const warna = document.createElement("p");
+        warna.textContent = "Warna: " + (data.warna || "-");
+
+        const pesan = document.createElement("p");
+        pesan.textContent = "Pesan: " + (data.pesan || "-");
+
+        const waktu = document.createElement("small");
+        waktu.textContent = "Waktu: " +
+          (data.waktu ? data.waktu.toDate().toLocaleString("id-ID") : "Belum tersedia");
+
+        kartu.append(nama, warna, pesan, waktu);
+        daftar.appendChild(kartu);
+      });
+    }, error => {
+      daftar.textContent = "Gagal mengambil jawaban: " + error.message;
+    });
+}
+</script>
+
+</body>
+</html>
